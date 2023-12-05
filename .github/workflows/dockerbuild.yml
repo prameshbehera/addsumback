@@ -18,6 +18,8 @@ jobs:
         file: ./add-service/Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/add-service:0.0.1
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -30,6 +32,8 @@ jobs:
         file: ./subtract-service/Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/subtract-service:0.0.1
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -42,6 +46,8 @@ jobs:
         file: ./gateway/Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/gateway:0.0.1
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
