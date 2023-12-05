@@ -9,9 +9,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      env:
+        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
+      
 
     - name: Login to Docker Hub
       run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
@@ -21,24 +24,18 @@ jobs:
         cd Addmodule
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/add-service:latest -f Dockerfile . --push
-      env:
-        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-
+      
     - name: Build and push Docker image for subtract-service
       run: |
         cd Submodule
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/subtract-service:latest -f Dockerfile . --push
-      env:
-        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
     - name: Build and push Docker image for gateway
       run: |
         cd Gatewayapp
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/gateway:latest -f Dockerfile . --push
-      env:
-        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
