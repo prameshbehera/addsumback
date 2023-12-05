@@ -12,8 +12,8 @@ app.use((req, res, next) => {
 });
 
 // Routes to microservices
-app.use('/add', require('./add-service'));
-app.use('/subtract', require('./subtract-service'));
+app.use('/add', require('./Addmodule/add-service'));
+app.use('/subtract', require('./Submodule/subtract-service'));
 
 app.get('/hello', (req, res) => {
     res.json({ name: "hello" });
