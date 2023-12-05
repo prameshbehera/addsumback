@@ -20,4 +20,4 @@ EXPOSE 3003
 ENV PORT=3003
 
 # Run devide-service.js when the container launches
-CMD ["node", "devide-service.js"]
+CMD ["node", "divide-service.js"]
