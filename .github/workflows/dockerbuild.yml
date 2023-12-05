@@ -20,7 +20,7 @@ jobs:
       run: |
         cd Addmodule
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/add-service:$GITHUB_SHA -t ${{ secrets.DOCKERHUB_REPO }}/add-service:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/add-service:latest -f Dockerfile . --push
       env:
         DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
@@ -28,7 +28,7 @@ jobs:
       run: |
         cd Submodule
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/subtract-service:$GITHUB_SHA -t ${{ secrets.DOCKERHUB_REPO }}/subtract-service:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/subtract-service:latest -f Dockerfile . --push
       env:
         DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
@@ -36,7 +36,7 @@ jobs:
       run: |
         cd Gatewayapp
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/gateway:$GITHUB_SHA -t ${{ secrets.DOCKERHUB_REPO }}/gateway:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/gateway:latest -f Dockerfile . --push
       env:
         DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
