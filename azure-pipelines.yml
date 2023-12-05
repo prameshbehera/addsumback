@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+- develop
 
 pool:
   vmImage: ubuntu-latest
@@ -15,7 +15,10 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Dockerhub connection'
+    repository: 'addsum'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+  
