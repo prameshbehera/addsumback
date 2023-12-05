@@ -31,11 +31,11 @@ jobs:
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/subtract-service:latest -f Dockerfile . --push
 
-    - name: Build and push Docker image for gateway
+    - name: Build and push Docker image for devide-service
       run: |
-        cd Gatewayapp
+        cd DivideModule
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/gateway:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/divide-service:latest -f Dockerfile . --push
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
