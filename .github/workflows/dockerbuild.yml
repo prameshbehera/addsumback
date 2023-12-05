@@ -20,25 +20,25 @@ jobs:
       run: |
         cd Addmodule
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t prameshbehera/addsum/add-service:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/add-service:latest -f Dockerfile . --push
       env:
-        DOCKERHUB_REPO: prameshbehera/addsum
+        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
     - name: Build and push Docker image for subtract-service
       run: |
         cd Submodule
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t prameshbehera/addsum/subtract-service:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/subtract-service:latest -f Dockerfile . --push
       env:
-        DOCKERHUB_REPO: prameshbehera/addsum
+        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
     - name: Build and push Docker image for gateway
       run: |
         cd Gatewayapp
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t prameshbehera/addsum/gateway:latest -f Dockerfile . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_REPO }}/gateway:latest -f Dockerfile . --push
       env:
-        DOCKERHUB_REPO: prameshbehera/addsum
+        DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
