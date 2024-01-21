@@ -14,13 +14,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Azure CLI
-      uses: Azure/cli@v1
-      with:
-        azcliversion: latest
-
     - name: Login to Azure Container Registry
-      run: az acr login --name ${{ secrets.ACR_REGISTRY }}
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_REGISTRY }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
