@@ -5,7 +5,11 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    env:
+      ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+      
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -39,7 +43,4 @@ jobs:
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.ACR_REGISTRY }}/divide-service:latest -f Dockerfile . --push
 
-    env:
-      ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
-      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+    
