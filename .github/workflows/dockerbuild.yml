@@ -6,40 +6,30 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
-      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-      
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Login to Azure Container Registry
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ secrets.ACR_REGISTRY }}
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
 
     - name: Build and push Docker image for add-service
       run: |
         cd Addmodule
-        docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.ACR_REGISTRY }}/add-service:latest -f Dockerfile . --push
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/add-service:latest -f Dockerfile .
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/add-service:latest
 
     - name: Build and push Docker image for subtract-service
       run: |
         cd Submodule
-        docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.ACR_REGISTRY }}/subtract-service:latest -f Dockerfile . --push
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/subtract-service:latest -f Dockerfile .
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/subtract-service:latest
 
     - name: Build and push Docker image for divide-service
       run: |
         cd DivideModule
-        docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.ACR_REGISTRY }}/divide-service:latest -f Dockerfile . --push
-
-    
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/divide-service:latest -f Dockerfile .
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/divide-service:latest
