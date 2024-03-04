@@ -6,30 +6,30 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Login to Docker Hub
-      run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker image for add-service
       run: |
         cd Addmodule
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/add-service:latest -f Dockerfile .
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/add-service:latest
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/add-service:latest -f Dockerfile .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/add-service:latest
 
     - name: Build and push Docker image for subtract-service
       run: |
         cd Submodule
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/subtract-service:latest -f Dockerfile .
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/subtract-service:latest
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/subtract-service:latest -f Dockerfile .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/subtract-service:latest
 
     - name: Build and push Docker image for divide-service
       run: |
         cd DivideModule
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/divide-service:latest -f Dockerfile .
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/divide-service:latest
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/divide-service:latest -f Dockerfile .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/divide-service:latest
