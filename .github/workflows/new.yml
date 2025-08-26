@@ -1,0 +1,46 @@
+name: Check Branch and Tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-and-tag:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check branch in target repo and create tag
+        shell: pwsh
+        run: |
+          # Inputs
+          $branch = "release/v1"
+          $tagName = "V1"   # Tag you want to create
+          $repo = "prameshbehera/addsumfront"   # Replace with your org/user + repo
+          $token = "${{ secrets.GITHUB_TOKEN }}"  # Or a PAT with repo scope
+
+          # API URL for the branch
+          $branchUrl = "https://api.github.com/repos/$repo/branches/$branch"
+
+          Write-Host "Checking if branch $branch exists in repo $repo..."
+
+          try {
+              $response = Invoke-RestMethod -Uri $branchUrl -Headers @{Authorization = "Bearer $token"} -Method GET
+              if ($null -ne $response.commit.sha) {
+                  $sha = $response.commit.sha
+                  Write-Host "Branch exists with commit SHA: $sha"
+
+                  # Prepare tag creation payload
+                  $tagUrl = "https://api.github.com/repos/$repo/git/refs"
+                  $body = @{
+                      ref = "refs/tags/$tagName"
+                      sha = $sha
+                  } | ConvertTo-Json
+
+                  Write-Host "Creating tag $tagName on commit $sha..."
+                  Invoke-RestMethod -Uri $tagUrl -Headers @{Authorization = "Bearer $token"} -Method POST -Body $body
+                  Write-Host ":white_check_mark: Tag created successfully!"
+              }
+          }
+          catch {
+              Write-Host ":x: Branch $branch not found in repo $repo"
+              exit 0
+          }
