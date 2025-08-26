@@ -12,8 +12,8 @@ jobs:
         shell: pwsh
         run: |
           # Inputs
-          $branch = "release/v1"
-          $tagName = "V1"   # Tag you want to create
+          $branch = "release/v2"
+          $tagName = "V2"   # Tag you want to create
           $repo = "prameshbehera/addsumfront"   # Replace with your org/user + repo
           $token = "${{ secrets.GH_SEC }}"  # Or a PAT with repo scope
 
