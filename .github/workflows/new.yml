@@ -15,7 +15,7 @@ jobs:
           $branch = "release/v1"
           $tagName = "V1"   # Tag you want to create
           $repo = "prameshbehera/addsumfront"   # Replace with your org/user + repo
-          $token = "${{ secrets.GITHUB_TOKEN }}"  # Or a PAT with repo scope
+          $token = "${{ secrets.GH_SEC }}"  # Or a PAT with repo scope
 
           # API URL for the branch
           $branchUrl = "https://api.github.com/repos/$repo/branches/$branch"
@@ -28,16 +28,16 @@ jobs:
                   $sha = $response.commit.sha
                   Write-Host "Branch exists with commit SHA: $sha"
 
-                  # Prepare tag creation payload
-                  $tagUrl = "https://api.github.com/repos/$repo/git/refs"
-                  $body = @{
-                      ref = "refs/tags/$tagName"
-                      sha = $sha
-                  } | ConvertTo-Json
+                  # # Prepare tag creation payload
+                  # $tagUrl = "https://api.github.com/repos/$repo/git/refs"
+                  # $body = @{
+                  #     ref = "refs/tags/$tagName"
+                  #     sha = $sha
+                  # } | ConvertTo-Json
 
-                  Write-Host "Creating tag $tagName on commit $sha..."
-                  Invoke-RestMethod -Uri $tagUrl -Headers @{Authorization = "Bearer $token"} -Method POST -Body $body
-                  Write-Host ":white_check_mark: Tag created successfully!"
+                  # Write-Host "Creating tag $tagName on commit $sha..."
+                  # Invoke-RestMethod -Uri $tagUrl -Headers @{Authorization = "Bearer $token"} -Method POST -Body $body
+                  # Write-Host ":white_check_mark: Tag created successfully!"
               }
           }
           catch {
