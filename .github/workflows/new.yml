@@ -21,6 +21,7 @@ jobs:
           $branchUrl = "https://api.github.com/repos/$repo/branches/$branch"
 
           Write-Host "Checking if branch $branch exists in repo $repo..."
+          write-Host "Branch api url:  $branchUrl "
 
           try {
               $response = Invoke-RestMethod -Uri $branchUrl -Headers @{Authorization = "Bearer $token"} -Method GET
